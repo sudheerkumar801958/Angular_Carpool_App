@@ -1,1 +1,40 @@
-<p>login works!</p>
+<div class="">
+    <div class="container col-4 justify-content-center reg-main ">
+        <h3 class="mt-4 reg-head"> LOGIN FORM</h3>
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class=" mt-4 ">
+            <div class="mb-3 ">
+              <label for="username" class="form-label reg-label">Username</label>
+              <input id="username" formControlName="username" class="form-control" placeholder="Username"/>
+              <div *ngIf="registrationForm.get('username')?.errors?.['required'] && registrationForm.get('username')?.touched" class="text-danger">
+                Username is required.
+              </div>
+              <div *ngIf="registrationForm.get('username')?.errors?.['minlength'] && registrationForm.get('username')?.touched" class="text-danger">
+                Minimum 3 characters required.
+              </div>
+            </div>
+          
+         
+          
+            <div class="mb-3 ">
+              <label for="password" class="form-label reg-label">Password</label>
+              <input type="password" id="password" formControlName="password" class="form-control" placeholder="Password"/>
+              <div *ngIf="registrationForm.get('password')?.errors?.['required'] && registrationForm.get('password')?.touched" class="text-danger">
+                Password is required.
+              </div>
+              <div *ngIf="registrationForm.get('password')?.errors?.['minlength'] && registrationForm.get('password')?.touched" class="text-danger">
+                Minimum 6 characters required.
+              </div>
+              <div class="d-flex">
+                <div class="p-2 flex-grow-1 reg-a"><a>Forgot Password</a></div>
+                <!-- <div class="p-2">Flex item</div> -->
+                <div class="p-2 reg-a" > <a class="p-2 reg-a" [routerLink]="'/signup'">Signup</a></div>
+              </div>
+              
+            </div>
+            
+        
+          
+            <button type="submit" class="btn btn-primary reg-button" [disabled]="registrationForm.invalid">Submit</button>
+          </form>
+    </div>
+</div>
