@@ -1,0 +1,35 @@
+// .bgcode {
+//     // height: 100%;
+//     // width: 100%;
+//     background-image: url('../../../public/bg.jpg'); /* Replace with your image path */
+//     background-size: cover; /* Cover the entire container */
+//     background-position: center; /* Center the image */
+//     padding: 20px; /* Optional: add padding */
+//     border-radius: 8px; /* Optional: round corners */
+//     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Optional: add shadow for depth */
+// }
+.reg-main{
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.reg-head{
+    text-align: center;
+    font-size: 20px;
+    padding-top: 23px;
+}
+.reg-label{
+    font-size: 14px;
+    font-weight: 500;
+}
+.reg-button{
+    text-align: center;
+   
+    margin: 20px 88px;
+
+    background-color: #ea868fdb;
+    color: #000;
+    font-weight: 500;
+    border: transparent;
+    width: 60%;
+}
+}
