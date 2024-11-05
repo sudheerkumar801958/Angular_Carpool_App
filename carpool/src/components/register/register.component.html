@@ -12,6 +12,17 @@
                 Minimum 3 characters required.
               </div>
             </div>
+            <div class="mb-3">
+              <label for="usertype" class="form-label reg-label">Usertype</label>
+              <select id="usertype" formControlName="usertype" class="form-control" >
+                <option style="font-size: 15px;" value="">Select Usertype</option> 
+                <option value="grab">Grab</option>
+                <option value="offer">Offer</option>
+              </select>
+              <div *ngIf="registrationForm.get('usertype')?.errors?.['required'] && registrationForm.get('usertype')?.touched" class="text-danger">
+                Usertype is required.
+              </div>
+            </div>        
           
             <div class="mb-3 ">
               <label for="email" class="form-label reg-label">Email</label>

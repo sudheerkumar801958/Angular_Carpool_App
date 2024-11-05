@@ -1,0 +1,123 @@
+<div class="container col-4 justify-content-center offer-main">
+    <h2 class="mt-4 offer-head">Offer a Ride</h2>
+    <form [formGroup]="offerRideForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="name" class="form-label offer-label">Name</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          placeholder="Enter your name"
+        />
+        <div
+          *ngIf="offerRideForm.get('name')?.errors?.['required'] && offerRideForm.get('name')?.touched"
+          class="text-danger"
+        >
+          Name is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="contact" class="form-label offer-label">Contact Number</label>
+        <input
+          type="text"
+          id="contact"
+          formControlName="contact"
+          class="form-control"
+          placeholder="Enter contact number"
+        />
+        <div
+          *ngIf="offerRideForm.get('contact')?.errors?.['required'] && offerRideForm.get('contact')?.touched"
+          class="text-danger"
+        >
+          Contact number is required.
+        </div>
+        <div
+          *ngIf="offerRideForm.get('contact')?.errors?.['pattern'] && offerRideForm.get('contact')?.touched"
+          class="text-danger"
+        >
+          Enter a valid 10-digit contact number.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="origin" class="form-label offer-label">Origin</label>
+        <input
+          type="text"
+          id="origin"
+          formControlName="origin"
+          class="form-control"
+          placeholder="Enter starting location"
+        />
+        <div
+          *ngIf="offerRideForm.get('origin')?.errors?.['required'] && offerRideForm.get('origin')?.touched"
+          class="text-danger"
+        >
+          Origin is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="destination" class="form-labe offer-labell">Destination</label>
+        <input
+          type="text"
+          id="destination"
+          formControlName="destination"
+          class="form-control"
+          placeholder="Enter destination"
+        />
+        <div
+          *ngIf="offerRideForm.get('destination')?.errors?.['required'] && offerRideForm.get('destination')?.touched"
+          class="text-danger"
+        >
+          Destination is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="date" class="form-label offer-label">Date</label>
+        <input
+          type="date"
+          id="date"
+          formControlName="date"
+          class="form-control"
+        />
+        <div
+          *ngIf="offerRideForm.get('date')?.errors?.['required'] && offerRideForm.get('date')?.touched"
+          class="text-danger"
+        >
+          Date is required.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="seatsAvailable" class="form-label offer-label">Seats Available</label>
+        <input
+          type="number"
+          id="seatsAvailable"
+          formControlName="seatsAvailable"
+          class="form-control"
+          placeholder="Enter available seats"
+          min="1"
+        />
+        <div
+          *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['required'] && offerRideForm.get('seatsAvailable')?.touched"
+          class="text-danger"
+        >
+          Seats available is required.
+        </div>
+        <div
+          *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['min'] && offerRideForm.get('seatsAvailable')?.touched"
+          class="text-danger"
+        >
+          At least 1 seat must be available.
+        </div>
+      </div>
+  
+      <button type="submit" class="btn btn-primary offer-button" [disabled]="offerRideForm.invalid">
+        Submit
+      </button>
+    </form>
+  </div>
+  
