@@ -111,8 +111,7 @@ export class OfferRideComponent implements OnInit {
       origin: ['', Validators.required],
       destination: ['', Validators.required],
       date: ['', Validators.required],
-      seatsAvailable: ['', [Validators.required, Validators.min(1)]],
-      usertype: ['offer', Validators.required]
+      seatsAvailable: ['', [Validators.required, Validators.min(1)]]
     });
   }
 

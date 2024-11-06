@@ -6,12 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:8088/api/auth/';
+  private apiUrl = 'https://b1a6-49-249-11-110.ngrok-free.app/api/auth/';
 
   constructor(private http: HttpClient) { }
 
   register(userData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'register', userData);
+  }
+  login(userData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'login', userData);
   }
 
   offerRide(rideData: any): Observable<any> {

@@ -1,7 +1,9 @@
+import { UserAuthService } from './../../services/user-auth.service';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -10,27 +12,33 @@ import { RouterModule } from '@angular/router';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  registrationForm: FormGroup;
+  loginForm: FormGroup;
+  userRole='';
 
-  constructor(private fb: FormBuilder) {
-    this.registrationForm = this.fb.group({
-      username: ['', [Validators.required, Validators.minLength(3)]],
+  constructor(private fb: FormBuilder, private authService:AuthService,private userAuthService: UserAuthService ) {
+    this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmPassword: ['', [Validators.required]]
-    }, { validators: this.passwordMatchValidator });
+    });
   }
-
-  passwordMatchValidator(form: FormGroup) {
-    const password = form.get('password')?.value;
-    const confirmPassword = form.get('confirmPassword')?.value;
-    return password === confirmPassword ? null : { mismatch: true };
-  }
+  // username = '';
+  // password = '';
+  // login() {
+  //   this.userAuthService.data = { username: this.username, password: this.password };
+  //   this.userAuthService.loginUser();
+  // }
 
   onSubmit() {
-    if (this.registrationForm.valid) {
-      console.log('Form Submitted', this.registrationForm.value);
+    if (this.loginForm.valid) {
+      // Pass the form values (email and password) to UserAuthService
+      const { email, password } = this.loginForm.value;
+      this.userAuthService.loginUser(email, password);
+
+      // Reset form after submission
+      this.loginForm.reset();
     }
   }
-
 }
+
+
+
