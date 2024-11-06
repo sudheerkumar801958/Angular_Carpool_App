@@ -19,6 +19,7 @@ export class RegisterComponent {
     this.registrationForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
       usertype:['',[Validators.required]],
+      contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], 
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
@@ -32,7 +33,13 @@ export class RegisterComponent {
   }
   onSubmit() {
     if (this.registrationForm.valid) {
-      this.authService.register(this.registrationForm.value)
+      // Create a copy of the form values excluding confirmPassword
+      const formData = { ...this.registrationForm.value };
+      delete formData.confirmPassword;
+  
+      console.log(formData);
+  
+      this.authService.register(formData)
         .subscribe(
           response => {
             console.log('Registration successful', response);
@@ -42,6 +49,8 @@ export class RegisterComponent {
           }
         );
     }
+    this.registrationForm.reset();
   }
+  
 
 }

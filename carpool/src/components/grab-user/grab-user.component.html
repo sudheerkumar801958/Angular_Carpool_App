@@ -1,39 +1,54 @@
-<!-- *ngIf="!showRides" -->
-<div class="container col-4 justify-content-center grab-main">
-    <h2 class="mt-4 grab-head">Enter Your Details</h2>
-    <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-      <div class="mb-3">
-        <label for="name" class="form-label grab-label">Name</label>
-        <input id="name" formControlName="name" class="form-control" placeholder="Your Name" />
-        <div *ngIf="userForm.get('name')?.errors?.['required'] && userForm.get('name')?.touched" class="text-danger">
-          Name is required.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label grab-label">Email</label>
-        <input id="email" formControlName="email" class="form-control" placeholder="Your Email" />
-        <div *ngIf="userForm.get('email')?.errors?.['email'] && userForm.get('email')?.touched" class="text-danger">
-          Valid email is required.
-        </div>
-      </div>
-      <div class="mb-3">
-        <label for="phone" class="form-label grab-label">Phone</label>
-        <input id="phone" formControlName="phone" class="form-control" placeholder="Your Phone Number" />
-        <div *ngIf="userForm.get('phone')?.errors?.['required'] && userForm.get('phone')?.touched" class="text-danger">
-          Phone is required.
-        </div>
-      </div>
-      <button type="submit" class="btn btn-primary grab-button" [disabled]="userForm.invalid">Submit</button>
-    </form>
+<!-- <div *ngIf="showRides">
+  <h2>Available Rides</h2>
+  <div *ngFor="let ride of rides" class="ride-card">
+    <p><strong>Driver:</strong> {{ ride.driver }}</p>
+    <p><strong>From:</strong> {{ ride.from }}</p>
+    <p><strong>To:</strong> {{ ride.to }}</p>
+    <p><strong>Seats Available:</strong> {{ ride.seatsAvailable }}</p>
   </div>
-  
-  <div *ngIf="showRides">
-    <h2>Available Rides</h2>
-    <div *ngFor="let ride of rides" class="ride-card">
-      <p><strong>Driver:</strong> {{ ride.driver }}</p>
-      <p><strong>From:</strong> {{ ride.from }}</p>
-      <p><strong>To:</strong> {{ ride.to }}</p>
-      <p><strong>Seats Available:</strong> {{ ride.seatsAvailable }}</p>
+</div> -->
+<!-- <div class="grab-main container" *ngIf="showRides">
+  <h2 class="grab-head">Available Rides</h2>
+  <div class="row">
+    <div *ngFor="let ride of rides" class="col-md-4 d-flex align-items-stretch" style="margin-bottom: 20px;">
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">{{ ride.driver }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">From: {{ ride.from }} - To: {{ ride.to }}</h6>
+          <p class="card-text">
+            <strong>Seats Available:</strong> {{ ride.seatsAvailable }}
+          </p>
+          <a href="#" class="card-link">Book Now</a>
+        </div>
+      </div>
     </div>
   </div>
-  
+</div> -->
+
+<div class="grab-main container" *ngIf="showRides">
+  <h2 class="grab-head">Available Rides</h2>
+  <div class="row">
+    <div *ngFor="let ride of rides" class="col-md-4 d-flex align-items-stretch" style="margin-bottom: 20px;">
+      <div class="card" style="width: 100%;">
+        <div class="card-body">
+          <h5 class="card-title">{{ ride.driver }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">From: {{ ride.from }} - To: {{ ride.to }}</h6>
+          <p class="card-text">
+            <strong>Seats Available:</strong> {{ ride.seatsAvailable }}
+          </p>
+
+          <!-- Seat selection input -->
+          <div class="form-group">
+            <label for="seatsToBook">Seats to Book:</label>
+            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" />
+          </div>
+
+          <button class="btn btn-primary mt-2" (click)="bookSeats(ride)">Book Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

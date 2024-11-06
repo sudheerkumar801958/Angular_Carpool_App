@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-offer-ride',
@@ -9,28 +10,159 @@ import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angula
   templateUrl: './offer-ride.component.html',
   styleUrl: './offer-ride.component.scss'
 })
-export class OfferRideComponent {
-  offerRideForm: FormGroup;
+// export class OfferRideComponent {
+//   offerRideForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+//   constructor(private fb: FormBuilder,private authService:AuthService) {
+//     this.offerRideForm = this.fb.group({
+//       origin: ['', Validators.required],
+//       destination: ['', Validators.required],
+//       date: ['', Validators.required],
+//       seatsAvailable: ['', [Validators.required, Validators.min(1)]],
+//       usertype: ['offer', Validators.required] // Predefined as "offer"
+//     });
+//   }
+
+//   ngOnInit(): void {}
+
+//   onSubmit() {
+//     if (this.offerRideForm.valid) {
+//       this.authService.register(this.offerRideForm.value)
+//         .subscribe(
+//           response => {
+//             console.log('Registration successful', response);
+//           },
+//           error => {
+//             console.error('Registration failed', error);
+//           }
+//         );
+//     }
+//   this.offerRideForm.reset()
+
+//   }
+
+// }
+// export class OfferRideComponent implements OnInit {
+//   offerRideForm: FormGroup;
+//   // rideId: string | null = null; // Assume an identifier to track the ride
+//   rideId:any;
+
+//   constructor(private fb: FormBuilder, private authService: AuthService) {
+//     this.offerRideForm = this.fb.group({
+//       origin: ['', Validators.required],
+//       destination: ['', Validators.required],
+//       date: ['', Validators.required],
+//       seatsAvailable: ['', [Validators.required, Validators.min(1)]],
+//       usertype: ['offer', Validators.required]
+//     });
+//   }
+
+//   ngOnInit(): void {
+//     // Check if there is an existing ride to edit
+//     this.loadRideDetails();
+//   }
+
+//   loadRideDetails() {
+//     // Fetch the ride details if updating an existing ride
+//     this.authService.getRideDetails(this.rideId).subscribe(rideData => {
+//       this.offerRideForm.patchValue(rideData);
+//     });
+//   }
+
+//   onSubmit() {
+//     if (this.offerRideForm.valid) {
+//       const rideData = this.offerRideForm.value;
+//       if (this.rideId) {
+//         // Update the ride
+//         this.authService.updateRide(this.rideId, rideData).subscribe(
+//           response => {
+//             console.log('Ride updated successfully', response);
+//           },
+//           error => {
+//             console.error('Update failed', error);
+//           }
+//         );
+//       } else {
+//         // Create a new ride using offerRide method
+//         this.authService.offerRide(rideData).subscribe(
+//           response => {
+//             console.log('Ride offered successfully', response);
+//             this.rideId = response.id; // Store the ID for potential updates
+//           },
+//           error => {
+//             console.error('Offer ride failed', error);
+//           }
+//         );
+//       }
+//       this.offerRideForm.reset();
+//     }
+//   }
+  
+// }
+
+export class OfferRideComponent implements OnInit {
+  offerRideForm: FormGroup;
+  rideId: any;
+  isSubmitted = false;  // Flag to track if the form was submitted
+  rideDetails: any = null; // Store ride details for displaying after submission
+
+  constructor(private fb: FormBuilder, private authService: AuthService) {
     this.offerRideForm = this.fb.group({
-      name: ['', Validators.required],
-      contact: ['', [Validators.required, Validators.pattern('^[0-9]{10}$')]], // Assuming a 10-digit contact number
       origin: ['', Validators.required],
       destination: ['', Validators.required],
       date: ['', Validators.required],
       seatsAvailable: ['', [Validators.required, Validators.min(1)]],
-      usertype: ['offer', Validators.required] // Predefined as "offer"
+      usertype: ['offer', Validators.required]
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadRideDetails();
+  }
 
-  onSubmit() {
-    if (this.offerRideForm.valid) {
-      console.log('Form Submitted:', this.offerRideForm.value);
-      // Here you could also send the form data to your backend
+  loadRideDetails() {
+    if (this.rideId) {
+      this.authService.getRideDetails(this.rideId).subscribe(rideData => {
+        this.offerRideForm.patchValue(rideData);
+        this.rideDetails = rideData;
+        this.isSubmitted = true;
+      });
     }
   }
 
+  onSubmit() {
+    if (this.offerRideForm.valid) {
+      const rideData = this.offerRideForm.value;
+      if (this.rideId) {
+        this.authService.updateRide(this.rideId, rideData).subscribe(
+          response => {
+            console.log('Ride updated successfully', response);
+            this.rideDetails = rideData;
+            this.isSubmitted = true;
+          },
+          error => {
+            console.error('Update failed', error);
+          }
+        );
+      } else {
+        this.authService.offerRide(rideData).subscribe(
+          response => {
+            console.log('Ride offered successfully', response);
+            this.rideId = response.id;
+            this.rideDetails = rideData;
+            this.isSubmitted = true;
+          },
+          error => {
+            console.error('Offer ride failed', error);
+          }
+        );
+      }
+      this.offerRideForm.reset();
+    }
+  }
+
+  onEdit() {
+    this.isSubmitted = false; // Show form again for editing
+  }
 }
+

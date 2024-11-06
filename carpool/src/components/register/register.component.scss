@@ -1,8 +1,14 @@
 
 .reg-main{
     background-color: white;
+   
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+.reg-card{
+    height: 450px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
 .reg-head{
     text-align: center;
     font-size: 20px;

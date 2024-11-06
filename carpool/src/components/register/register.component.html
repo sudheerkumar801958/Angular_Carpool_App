@@ -2,6 +2,7 @@
     <div class="container col-4 justify-content-center reg-main ">
         <h3 class="mt-4 reg-head"> CREATE ACCOUNT</h3>
         <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()" class=" mt-4 ">
+          <div class="reg-card">
             <div class="mb-3 ">
               <label for="username" class="form-label reg-label">Username</label>
               <input id="username" formControlName="username" class="form-control" placeholder="Username"/>
@@ -22,7 +23,29 @@
               <div *ngIf="registrationForm.get('usertype')?.errors?.['required'] && registrationForm.get('usertype')?.touched" class="text-danger">
                 Usertype is required.
               </div>
-            </div>        
+            </div>  
+            <div class="mb-3">
+              <label for="contact" class="form-label offer-label">Contact Number</label>
+              <input
+                type="text"
+                id="contact"
+                formControlName="contact"
+                class="form-control"
+                placeholder="Enter contact number"
+              />
+              <div
+                *ngIf="registrationForm.get('contact')?.errors?.['required'] && registrationForm.get('contact')?.touched"
+                class="text-danger"
+              >
+                Contact number is required.
+              </div>
+              <div
+                *ngIf="registrationForm.get('contact')?.errors?.['pattern'] && registrationForm.get('contact')?.touched"
+                class="text-danger"
+              >
+                Enter a valid 10-digit contact number.
+              </div>
+            </div>      
           
             <div class="mb-3 ">
               <label for="email" class="form-label reg-label">Email</label>
@@ -56,7 +79,7 @@
                 Passwords do not match.
               </div>
             </div>
-          
+          </div>
             <button type="submit" class="btn btn-primary reg-button" [disabled]="registrationForm.invalid">Submit</button>
           </form>
     </div>
