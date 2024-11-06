@@ -52,23 +52,23 @@
       </div>
   
       <div class="mb-3">
-        <label for="seatsAvailable" class="form-label offer-label">Seats Available</label>
+        <label for="availableSeats" class="form-label offer-label">Seats Available</label>
         <input
           type="number"
-          id="seatsAvailable"
-          formControlName="seatsAvailable"
+          id="availableSeats"
+          formControlName="availableSeats"
           class="form-control"
           placeholder="Enter available seats"
           min="1"
         />
         <div
-          *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['required'] && offerRideForm.get('seatsAvailable')?.touched"
+          *ngIf="offerRideForm.get('availableSeats')?.errors?.['required'] && offerRideForm.get('availableSeats')?.touched"
           class="text-danger"
         >
           Seats available is required.
         </div>
         <div
-          *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['min'] && offerRideForm.get('seatsAvailable')?.touched"
+          *ngIf="offerRideForm.get('availableSeats')?.errors?.['min'] && offerRideForm.get('availableSeats')?.touched"
           class="text-danger"
         >
           At least 1 seat must be available.
@@ -132,19 +132,19 @@
   
       <!-- Seats Available Input -->
       <div class="mb-3">
-        <label for="seatsAvailable" class="form-label offer-label">Seats Available</label>
+        <label for="availableSeats" class="form-label offer-label">Seats Available</label>
         <input
           type="number"
-          id="seatsAvailable"
-          formControlName="seatsAvailable"
+          id="availableSeats"
+          formControlName="availableSeats"
           class="form-control"
           placeholder="Enter available seats"
           min="1"
         />
-        <div *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['required'] && offerRideForm.get('seatsAvailable')?.touched" class="text-danger">
+        <div *ngIf="offerRideForm.get('availableSeats')?.errors?.['required'] && offerRideForm.get('availableSeats')?.touched" class="text-danger">
           Seats available is required.
         </div>
-        <div *ngIf="offerRideForm.get('seatsAvailable')?.errors?.['min'] && offerRideForm.get('seatsAvailable')?.touched" class="text-danger">
+        <div *ngIf="offerRideForm.get('availableSeats')?.errors?.['min'] && offerRideForm.get('availableSeats')?.touched" class="text-danger">
           At least 1 seat must be available.
         </div>
       </div>
@@ -156,16 +156,17 @@
     </form>
   
     <!-- Ride Details Card After Submission -->
-    <div *ngIf="isSubmitted" class="card mt-4">
-      <div class="card-header">
-        Ride Details
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">{{ rideDetails.origin }} to {{ rideDetails.destination }}</h5>
-        <p class="card-text"><strong>Date:</strong> {{ rideDetails.date | date }}</p>
-        <p class="card-text"><strong>Seats Available:</strong> {{ rideDetails.seatsAvailable }}</p>
-        <button class="btn btn-primary" (click)="onEdit()">Edit</button>
-      </div>
+    
+  </div>
+  <div *ngIf="isSubmitted" class="card mt-4">
+    <div class="card-header">
+      Ride Details
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{ rideDetails.origin }} to {{ rideDetails.destination }}</h5>
+      <p class="card-text"><strong>Date:</strong> {{ rideDetails.date | date }}</p>
+      <p class="card-text"><strong>Seats Available:</strong> {{ rideDetails.availableSeats }}</p>
+      <!-- <button class="btn btn-primary" (click)="onEdit()">Edit</button> -->
     </div>
   </div>
     

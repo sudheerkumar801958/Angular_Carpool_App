@@ -18,7 +18,7 @@ import { AuthService } from '../../services/auth.service';
 //       origin: ['', Validators.required],
 //       destination: ['', Validators.required],
 //       date: ['', Validators.required],
-//       seatsAvailable: ['', [Validators.required, Validators.min(1)]],
+//       availableSeats: ['', [Validators.required, Validators.min(1)]],
 //       usertype: ['offer', Validators.required] // Predefined as "offer"
 //     });
 //   }
@@ -52,7 +52,7 @@ import { AuthService } from '../../services/auth.service';
 //       origin: ['', Validators.required],
 //       destination: ['', Validators.required],
 //       date: ['', Validators.required],
-//       seatsAvailable: ['', [Validators.required, Validators.min(1)]],
+//       availableSeats: ['', [Validators.required, Validators.min(1)]],
 //       usertype: ['offer', Validators.required]
 //     });
 //   }
@@ -111,7 +111,7 @@ export class OfferRideComponent implements OnInit {
       origin: ['', Validators.required],
       destination: ['', Validators.required],
       date: ['', Validators.required],
-      seatsAvailable: ['', [Validators.required, Validators.min(1)]]
+      availableSeats: ['', [Validators.required, Validators.min(1)]]
     });
   }
 
@@ -132,18 +132,7 @@ export class OfferRideComponent implements OnInit {
   onSubmit() {
     if (this.offerRideForm.valid) {
       const rideData = this.offerRideForm.value;
-      if (this.rideId) {
-        this.authService.updateRide(this.rideId, rideData).subscribe(
-          response => {
-            console.log('Ride updated successfully', response);
-            this.rideDetails = rideData;
-            this.isSubmitted = true;
-          },
-          error => {
-            console.error('Update failed', error);
-          }
-        );
-      } else {
+     
         this.authService.offerRide(rideData).subscribe(
           response => {
             console.log('Ride offered successfully', response);
@@ -155,9 +144,10 @@ export class OfferRideComponent implements OnInit {
             console.error('Offer ride failed', error);
           }
         );
-      }
+      
       this.offerRideForm.reset();
     }
+    
   }
 
   onEdit() {
@@ -165,3 +155,34 @@ export class OfferRideComponent implements OnInit {
   }
 }
 
+
+// onSubmit() {
+//   if (this.offerRideForm.valid) {
+//     const rideData = this.offerRideForm.value;
+//     if (this.rideId) {
+//       this.authService.updateRide(this.rideId, rideData).subscribe(
+//         response => {
+//           console.log('Ride updated successfully', response);
+//           this.rideDetails = rideData;
+//           this.isSubmitted = true;
+//         },
+//         error => {
+//           console.error('Update failed', error);
+//         }
+//       );
+//     } else {
+//       this.authService.offerRide(rideData).subscribe(
+//         response => {
+//           console.log('Ride offered successfully', response);
+//           this.rideId = response.id;
+//           this.rideDetails = rideData;
+//           this.isSubmitted = true;
+//         },
+//         error => {
+//           console.error('Offer ride failed', error);
+//         }
+//       );
+//     }
+//     this.offerRideForm.reset();
+//   }
+// }

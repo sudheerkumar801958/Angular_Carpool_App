@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private apiUrl = 'https://b1a6-49-249-11-110.ngrok-free.app/api/auth/';
+  private rideUrl='https://b1a6-49-249-11-110.ngrok-free.app/api/rides/';
 
   constructor(private http: HttpClient) { }
 
@@ -18,7 +19,7 @@ export class AuthService {
   }
 
   offerRide(rideData: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl + 'offerRide', rideData);
+    return this.http.post<any>(this.rideUrl + 'create', rideData);
   }
 
   updateRide(rideId: string, updatedData: any): Observable<any> {
@@ -26,6 +27,6 @@ export class AuthService {
   }
 
   getRideDetails(rideId: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}ride/${rideId}`);
+    return this.http.get<any>(`${this.rideUrl}ride/${rideId}`);
   }
 }
