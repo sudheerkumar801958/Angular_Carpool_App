@@ -118,7 +118,7 @@ export class OfferRideComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadRideDetails();
+    // this.loadRideDetails();
     if (typeof window !== 'undefined' && window.localStorage) {
       this.storedUser = localStorage.getItem('user');
   
@@ -139,15 +139,15 @@ export class OfferRideComponent implements OnInit {
     }
   }
 
-  loadRideDetails() {
-    if (this.rideId) {
-      this.authService.getRideDetails(this.rideId).subscribe(rideData => {
-        this.offerRideForm.patchValue(rideData);
-        this.rideDetails = rideData;
-        this.isSubmitted = true;
-      });
-    }
-  }
+  // loadRideDetails() {
+  //   if (this.rideId) {
+  //     this.authService.getRideDetails(this.rideId).subscribe(rideData => {
+  //       this.offerRideForm.patchValue(rideData);
+  //       this.rideDetails = rideData;
+  //       this.isSubmitted = true;
+  //     });
+  //   }
+  // }
 
   onSubmit() {
     if (this.offerRideForm.valid) {

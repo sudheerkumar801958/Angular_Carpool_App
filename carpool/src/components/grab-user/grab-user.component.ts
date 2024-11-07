@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -39,18 +40,21 @@ import { NotificationsService } from '../../services/notifications.service';
 
 export class GrabUserComponent {
   showRides = true;
-  rides = [
-    { driver: 'Alice', from: 'City A', to: 'City B', seatsAvailable: 3, selectedSeats: 1 },
-    { driver: 'Bob', from: 'City C', to: 'City D', seatsAvailable: 2, selectedSeats: 1 },
-    { driver: 'Charlie', from: 'City E', to: 'City F', seatsAvailable: 4, selectedSeats: 1 }
-  ];
+ availableRides:any;
+  constructor(private notificationService: NotificationsService , private authService:AuthService) {}
 
-  constructor(private notificationService: NotificationsService) {}
+  ngOnInit(){
+    this.authService.getRideDetails().subscribe (res =>{
+      // console.log(res);
+      this.availableRides=res
+      
+    })
+  }
 
   bookSeats(ride: any) {
     const selectedSeats = ride.selectedSeats || 1;
 
-    if (selectedSeats > ride.seatsAvailable) {
+    if (selectedSeats > ride.availableSeats) {
       alert('Not enough seats available');
       return;
     }

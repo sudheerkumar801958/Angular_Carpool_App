@@ -1,13 +1,14 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://b1a6-49-249-11-110.ngrok-free.app/api/auth/';
-  private rideUrl='https://b1a6-49-249-11-110.ngrok-free.app/api/rides/';
+  private apiUrl = 'https://83c9-45-112-28-194.ngrok-free.app/api/auth/';
+  private rideUrl='https://83c9-45-112-28-194.ngrok-free.app/api/rides/';
+  private profileUrl='https://83c9-45-112-28-194.ngrok-free.app/api/profile/';
 
   constructor(private http: HttpClient) { }
 
@@ -26,18 +27,27 @@ export class AuthService {
     return this.http.put<any>(`${this.apiUrl}updateRide/${rideId}`, updatedData);
   }
 
-  getRideDetails(rideId: string): Observable<any> {
-    return this.http.get<any>(`${this.rideUrl}ride/${rideId}`);
+  getRideDetails(): Observable<any> {
+    return this.http.get<any>(`${this.rideUrl}getrides`);
   }
 
-  uploadProfileImage(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('image', file);
-    return this.http.post(this.rideUrl + 'uploadImage', formData);
+  uploadProfileImage(formData: FormData): Observable<any> {
+    // const formData = new FormData();
+    // formData.append('image', file);
+    return this.http.post(this.profileUrl + 'uploadImage', formData);
   }
 
-  // Method to fetch profile image URL
-  getProfileImage(): Observable<string> {
-    return this.http.get(this.rideUrl + 'getImage', { responseType: 'text' });
+  getProfileImage(email: string): Observable<Blob> {
+    return this.http.get<ArrayBuffer>(`${this.profileUrl}getprofilepic/${email}`, { responseType: 'arraybuffer' as 'json' })
+      .pipe(
+        map((data: ArrayBuffer) => {
+          // Convert ArrayBuffer to Blob (with the appropriate mime type)
+          const blob = new Blob([data], { type: 'image/jpeg' }); // Adjust mime type as needed (e.g., 'image/png')
+          return blob;
+        })
+      );
   }
+  
+  
+
 }

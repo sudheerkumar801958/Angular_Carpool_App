@@ -29,19 +29,19 @@
 <div class="grab-main container" *ngIf="showRides">
   <h2 class="grab-head">Available Rides</h2>
   <div class="row">
-    <div *ngFor="let ride of rides" class="col-md-4 d-flex align-items-stretch" style="margin-bottom: 20px;">
+    <div *ngFor="let ride of availableRides" class="col-md-4 d-flex align-items-stretch" style="margin-bottom: 20px;">
       <div class="card" style="width: 100%;">
         <div class="card-body">
-          <h5 class="card-title">{{ ride.driver }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">From: {{ ride.from }} - To: {{ ride.to }}</h6>
+          <h5 class="card-title">Owner: {{ ride.owner }}</h5>
+          <h6 class="card-subtitle mb-2 text-muted">From: {{ ride.origin }} - To: {{ ride.destination }}</h6>
           <p class="card-text">
-            <strong>Seats Available:</strong> {{ ride.seatsAvailable }}
+            <strong>Seats Available:</strong> {{ ride.availableSeats }}
           </p>
 
           <!-- Seat selection input -->
           <div class="form-group">
             <label for="seatsToBook">Seats to Book:</label>
-            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" />
+            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" placeholder="no of seats"/>
           </div>
 
           <button class="btn btn-primary mt-2" (click)="bookSeats(ride)">Book Now</button>

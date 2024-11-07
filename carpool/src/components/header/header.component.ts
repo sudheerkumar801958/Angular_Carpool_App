@@ -12,21 +12,27 @@ import { CommonModule } from '@angular/common';
 })
 export class HeaderComponent {
    userdata:any;
+   userEmail:any;
    storedUser:any;
+   loggedInUser:any
+   loggedInEmail:any
    showCard = false;
   constructor(private eRef: ElementRef, private authService:AuthService) {
 
   }
 
   ngOnInit(): void {
+    this.fetchProfileImage()
     if (typeof window !== 'undefined' && window.localStorage) {
       this.storedUser = localStorage.getItem('user');
   
       try {
-        const loggedInUser = this.storedUser ? JSON.parse(this.storedUser) : null;
+        this.loggedInUser = this.storedUser ? JSON.parse(this.storedUser) : null;
+        this. loggedInEmail= this.storedUser ? JSON.parse(this.storedUser) : null;
         
-        if (loggedInUser && loggedInUser.username) {
-          this.userdata = loggedInUser.username;
+        if (this.loggedInUser && this.loggedInUser.username ) {
+          this.userdata = this.loggedInUser.username;
+          this.userEmail = this.loggedInEmail.email
           console.log(this.userdata);
         } else {
           console.log("No user found in localStorage.");
@@ -50,28 +56,56 @@ export class HeaderComponent {
   onProfileImageUpload(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.authService.uploadProfileImage(file).subscribe({
+      // Validate file type before uploading
+      const validImageTypes = ['image/jpeg', 'image/png', 'image/gif'];
+      if (!validImageTypes.includes(file.type)) {
+        console.error('Only image files are allowed!');
+        return;
+      }
+  
+      // Proceed with uploading the image
+      const loggedInEmail = this.storedUser ? JSON.parse(this.storedUser) : null;
+      const formData = new FormData();
+      formData.append('image', file);
+      formData.append('email', loggedInEmail.email);
+  
+      this.authService.uploadProfileImage(formData).subscribe({
         next: (response: any) => {
           this.profileImage = response.imageUrl; // Set the uploaded image URL
         },
         error: (error) => console.error('Image upload failed', error)
       });
+  
+      // Show preview
       const reader = new FileReader();
       reader.onload = (e: any) => {
-        this.profileImage = e.target.result; // Set the uploaded image as a base64 string
+        this.profileImage = e.target.result;
       };
       reader.readAsDataURL(file);
     }
   }
-
+  
   fetchProfileImage() {
-    this.authService.getProfileImage().subscribe({
-      next: (imageUrl: string) => {
-        this.profileImage = imageUrl;
-      },
-      error: (error) => console.error('Failed to fetch profile image', error)
-    });
+    const storedUser = localStorage.getItem('user');
+    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+  
+    if (loggedInUser && loggedInUser.email) {
+      this.authService.getProfileImage(loggedInUser.email).subscribe({
+        next: (response) => {
+          // Create a URL for the image Blob
+          const imageUrl = URL.createObjectURL(response);
+          this.profileImage = imageUrl; // Set the image URL to display
+        },
+        error: (error) => {
+          console.error('Failed to fetch profile image', error);
+        }
+      });
+    } else {
+      console.error('No logged-in user email found');
+    }
   }
+  
+  
 
 
   @HostListener('document:click', ['$event'])

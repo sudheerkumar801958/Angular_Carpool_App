@@ -1,8 +1,4 @@
 <div class="dashboard">
-
- 
-  <!-- <app-grab-user></app-grab-user> -->
-<!-- <app-offer-ride></app-offer-ride> -->
+  <app-header *ngIf="showHeader"></app-header>
+  <router-outlet></router-outlet>
 </div>
-<app-header></app-header>
-<router-outlet />

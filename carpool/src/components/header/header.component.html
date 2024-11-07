@@ -31,6 +31,8 @@
   <!-- Profile Dropdown Card -->
   <div *ngIf="showProfileCard" class="profile-card-overlay">
     <div class="card" style="width: 20rem;">
+      <h5 class="card-title">{{ userdata }}</h5>
+
       <div class="card-body">
         <!-- Circle for Profile Image Upload -->
         <div class="profile-image-circle">
@@ -40,10 +42,8 @@
           </label>
           <input id="profile-image-input" type="file" (change)="onProfileImageUpload($event)" style="display: none;" />
         </div>
-        
         <!-- User Details -->
-        <h5 class="card-title">{{ userdata1 }}</h5>
-        <p class="card-subtitle text-muted">User Email</p>
+        <p class="card-subtitle text-muted">{{userEmail}}</p>
       </div>
     </div>
   </div>
