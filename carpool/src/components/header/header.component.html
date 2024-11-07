@@ -16,15 +16,37 @@
     </div>
   </nav> -->
   <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
-
     <div class="container-fluid">
       <a class="navbar-brand">Carpool</a>
       <form class="d-flex">
-        <h5>{{userdata}}</h5>
-        <!-- <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"> -->
-        <button class="btn  grab-prf" type="submit">
-        <i class="fa fa-user-circle-o" aria-hidden="true" ></i></button>
+        <h5>{{ userdata }}</h5>
+        <!-- Profile Button -->
+        <button class="btn grab-prf" type="button" (click)="toggleProfileCard()">
+          <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+        </button>
       </form>
     </div>
-  
   </nav>
+  
+  <!-- Profile Dropdown Card -->
+  <div *ngIf="showProfileCard" class="profile-card-overlay">
+    <div class="card" style="width: 20rem;">
+      <div class="card-body">
+        <!-- Circle for Profile Image Upload -->
+        <div class="profile-image-circle">
+          <label for="profile-image-input">
+            <img *ngIf="profileImage" [src]="profileImage" alt="User Image" class="user-image" />
+          <i *ngIf="!profileImage" class="fa fa-camera" aria-hidden="true"></i>
+          </label>
+          <input id="profile-image-input" type="file" (change)="onProfileImageUpload($event)" style="display: none;" />
+        </div>
+        
+        <!-- User Details -->
+        <h5 class="card-title">{{ userdata1 }}</h5>
+        <p class="card-subtitle text-muted">User Email</p>
+      </div>
+    </div>
+  </div>
+  
+  
+  

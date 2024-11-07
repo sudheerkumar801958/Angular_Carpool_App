@@ -29,4 +29,15 @@ export class AuthService {
   getRideDetails(rideId: string): Observable<any> {
     return this.http.get<any>(`${this.rideUrl}ride/${rideId}`);
   }
+
+  uploadProfileImage(file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', file);
+    return this.http.post(this.rideUrl + 'uploadImage', formData);
+  }
+
+  // Method to fetch profile image URL
+  getProfileImage(): Observable<string> {
+    return this.http.get(this.rideUrl + 'getImage', { responseType: 'text' });
+  }
 }

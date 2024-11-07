@@ -25,8 +25,11 @@ export class UserAuthService {
         const userData = {...response};
         delete userData.token
         console.log(userData)
-        // this.userSubject.next(userData);
-        localStorage.setItem('user', userData); 
+        this.userSubject.next(userData);
+        localStorage.setItem('user', JSON.stringify(userData)); 
+        console.log(localStorage.getItem('user'));
+        // localStorage.removeItem('user');
+        
         this.userRole = this.getUser();
         if (this.userRole === 'Admin') {
           this.router.navigate(['/offer']); // Redirect to Offer Ride page for Admins

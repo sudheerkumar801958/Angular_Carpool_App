@@ -105,6 +105,8 @@ export class OfferRideComponent implements OnInit {
   rideId: any;
   isSubmitted = false;  // Flag to track if the form was submitted
   rideDetails: any = null; // Store ride details for displaying after submission
+  storedUser:any
+  userdata:any
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.offerRideForm = this.fb.group({
@@ -117,6 +119,24 @@ export class OfferRideComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadRideDetails();
+    if (typeof window !== 'undefined' && window.localStorage) {
+      this.storedUser = localStorage.getItem('user');
+  
+      try {
+        const userEmail = this.storedUser ? JSON.parse(this.storedUser) : null;
+        
+        if (userEmail && userEmail.email) {
+          this.userdata = userEmail.email;
+          console.log(this.userdata);
+        } else {
+          console.log("No user found in localStorage.");
+        }
+      } catch (error) {
+        console.error("Error parsing user data from localStorage:", error);
+      }
+    } else {
+      console.log("localStorage is not available.");
+    }
   }
 
   loadRideDetails() {
@@ -131,7 +151,10 @@ export class OfferRideComponent implements OnInit {
 
   onSubmit() {
     if (this.offerRideForm.valid) {
-      const rideData = this.offerRideForm.value;
+      const rideData = {
+        ...this.offerRideForm.value,  // Spread the form values
+        email: this.userdata           // Add userdata (email) to the payload
+      };
      
         this.authService.offerRide(rideData).subscribe(
           response => {
@@ -147,7 +170,7 @@ export class OfferRideComponent implements OnInit {
       
       this.offerRideForm.reset();
     }
-    
+
   }
 
   onEdit() {
