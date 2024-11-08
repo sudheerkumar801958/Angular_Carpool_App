@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
@@ -49,5 +49,14 @@ export class UserAuthService {
     if(role === "offer"){
       return 'Admin'
     } else return 'User'
+  }
+
+  signOut(): Observable<any> {
+    localStorage.removeItem('key');
+    localStorage.removeItem('role');
+    localStorage.removeItem('isAuthenticated');
+    this.router.navigate(['']);
+    // this._authenticated = false;
+    return of(true);
   }
 }

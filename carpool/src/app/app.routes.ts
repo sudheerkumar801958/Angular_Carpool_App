@@ -5,8 +5,10 @@ import { GrabUserComponent } from '../components/grab-user/grab-user.component';
 import { OfferRideComponent } from '../components/offer-ride/offer-ride.component';
 import { RoleGuard } from '../services/route.guard';
 import { HeaderComponent } from '../components/header/header.component';
+import { ForgotpasswordComponent } from '../components/forgotpassword/forgotpassword.component';
 export const routes: Routes = [
      { path: '', component: LoginComponent,data: { showHeader: false } },
+     {path:'forgotPassword', component:ForgotpasswordComponent,data: { showHeader: false }},
     { path: 'signup', component: RegisterComponent,data: { showHeader: false } },
     { path: 'grab', component: GrabUserComponent, canActivate: [RoleGuard],
     data: { role: 'User',showHeader: true }  },

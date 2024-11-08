@@ -9,7 +9,7 @@ export class AuthService {
   private apiUrl = 'https://83c9-45-112-28-194.ngrok-free.app/api/auth/';
   private rideUrl='https://83c9-45-112-28-194.ngrok-free.app/api/rides/';
   private profileUrl='https://83c9-45-112-28-194.ngrok-free.app/api/profile/';
-
+  
   constructor(private http: HttpClient) { }
 
   register(userData: any): Observable<any> {
@@ -18,7 +18,9 @@ export class AuthService {
   login(userData: any): Observable<any> {
     return this.http.post<any>(this.apiUrl + 'login', userData);
   }
-
+  forgotPassword(userData: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl + 'forgotpassword', userData);
+  }
   offerRide(rideData: any): Observable<any> {
     return this.http.post<any>(this.rideUrl + 'create', rideData);
   }

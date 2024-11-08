@@ -2,7 +2,7 @@ import { AuthService } from './../../services/auth.service';
 import { Component, ElementRef, HostListener } from '@angular/core';
 import { User } from '../../model/user.model';
 import { CommonModule } from '@angular/common';
-
+import { UserAuthService, } from './../../services/user-auth.service';
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -17,7 +17,7 @@ export class HeaderComponent {
    loggedInUser:any
    loggedInEmail:any
    showCard = false;
-  constructor(private eRef: ElementRef, private authService:AuthService) {
+  constructor(private eRef: ElementRef, private authService:AuthService, private userauthservice:UserAuthService) {
 
   }
 
@@ -115,4 +115,8 @@ export class HeaderComponent {
     }
   }
     
+
+  logout(): void{
+    this.userauthservice.signOut();
+  }
 }
