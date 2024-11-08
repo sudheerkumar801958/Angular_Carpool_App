@@ -24,8 +24,6 @@
     </div>
   </div>
 </div> -->
-<div>
-
 <div class="grab-main container" *ngIf="showRides">
   <h2 class="grab-head">Available Rides</h2>
   <div class="row">
@@ -38,8 +36,8 @@
 
           <!-- Seat selection input -->
           <div class="form-group">
-            <label for="seatsToBook"class="title">Seats To Book:</label>
-            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" placeholder="No of Seats"/>
+            <label for="seatsToBook" class="title">Seats to Book:</label>
+            <input type="number" min="1" [max]="ride.availableSeats" [(ngModel)]="ride.selectedSeats" class="form-control" placeholder="No of Seats"/>
           </div>
           <div class="btn-body">
             <button class="btn btn-primary reg-button" (click)="bookSeats(ride)">Book Now</button>
@@ -50,6 +48,6 @@
     </div>
   </div>
 </div>
-</div>
+
 
 

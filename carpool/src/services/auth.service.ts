@@ -49,6 +49,10 @@ export class AuthService {
         })
       );
   }
+
+  notifyDriver(formData: any): Observable<any> {
+    return this.http.post<any>(this.rideUrl + 'notifyDriver', formData);
+  }
   
   
 
