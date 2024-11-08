@@ -1,8 +1,8 @@
+import { filter } from 'rxjs';
 import { AuthService } from './../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NotificationsService } from '../../services/notifications.service';
 
 
 @Component({
@@ -41,7 +41,7 @@ import { NotificationsService } from '../../services/notifications.service';
 export class GrabUserComponent {
   showRides = true;
  availableRides:any;
-  constructor(private notificationService: NotificationsService , private authService:AuthService) {}
+  constructor(private authService:AuthService) {}
 
   ngOnInit(){
     this.authService.getRideDetails().subscribe (res =>{
@@ -52,31 +52,35 @@ export class GrabUserComponent {
   }
 
   bookSeats(ride: any) {
-    const selectedSeats = ride.selectedSeats || 1;
-
-    if (selectedSeats > ride.availableSeats) {
-      alert('Not enough seats available');
-      return;
+    const storedUser = localStorage.getItem('user');
+    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+    console.log(this.availableRides);
+    
+    
+    if(this.availableRides.availableSeats > this.availableRides.selectedSeats){
+      alert(" Not enough seats available ")
     }
+    if (loggedInUser && ride.selectedSeats) {
+      const payload = {
+        email: loggedInUser.email,
+        seatsToBook: ride.selectedSeats,
+        rideOwner: ride.owner,  // Additional ride details if needed
+      };
 
-    console.log(`Booking ${selectedSeats} seat(s) with driver ${ride.driver}`);
-    // Add booking logic here, such as calling a booking service
-
-    ride.seatsAvailable -= selectedSeats;
-    ride.selectedSeats = 1;
-
-    // Send a notification to the offer giver
-    this.sendNotification(ride.driver, selectedSeats);
+      this.authService.notifyDriver(payload).subscribe(
+        response => {
+          console.log('Booking successful', response);
+          // Additional logic after booking, e.g., confirmation message
+        },
+        error => {
+          console.error('Error booking seats', error);
+        }
+      );
+    } else {
+      console.error('User not logged in or no seats selected');
+    }
   }
+  
 
-  sendNotification(driver: string, seats: number) {
-    this.notificationService.notifyDriver(driver, seats).subscribe(
-      response => {
-        console.log(`Notification sent to ${driver}`, response);
-      },
-      error => {
-        console.error(`Failed to send notification to ${driver}`, error);
-      }
-    );
-  }
+  
 }
