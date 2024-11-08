@@ -80,7 +80,7 @@
       </button>
     </form>
   </div> -->
-  <div class="container col-4 justify-content-center offer-main">
+  <div class="container col-4 justify-content-center offer-main" *ngIf="myRideDetails?.length == 0">
     <!-- Form Header -->
     <h2 class="mt-4 offer-head" *ngIf="!isSubmitted">Offer a Ride</h2>
   
@@ -158,15 +158,18 @@
     <!-- Ride Details Card After Submission -->
     
   </div>
-  <div *ngIf="isSubmitted" class="card mt-4">
+ <div *ngIf="myRideDetails?.length > 0">
+  <div  class="container card mt-4 col-4 justify-content-center" >
     <div class="card-header">
       Ride Details
     </div>
-    <div class="card-body">
-      <h5 class="card-title">{{ rideDetails.origin }} to {{ rideDetails.destination }}</h5>
-      <p class="card-text"><strong>Date:</strong> {{ rideDetails.date | date }}</p>
-      <p class="card-text"><strong>Seats Available:</strong> {{ rideDetails.availableSeats }}</p>
+    <div class="card-body" *ngFor="let ride of myRideStatus">
+      <!-- {{myRideStatus | json}} -->
+      <p class="card-title"><strong>Ride :</strong> {{ ride.origin }} to {{ ride.destination }}</p>
+      <p class="card-text"><strong>Date:</strong> {{ ride.date | date }}</p>
+      <p class="card-text"><strong>Seats Available:</strong> {{ ride.availableSeats }}</p>
       <!-- <button class="btn btn-primary" (click)="onEdit()">Edit</button> -->
     </div>
   </div>
+ </div>
     

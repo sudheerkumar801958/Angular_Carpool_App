@@ -21,18 +21,42 @@ export class HeaderComponent {
 
   }
 
-  ngOnInit(): void {
-    this.fetchProfileImage()
-    if (typeof window !== 'undefined' && window.localStorage) {
-      this.storedUser = localStorage.getItem('user');
+  // ngOnInit(): void {
+  //   this.fetchProfileImage()
+  //   if (typeof window !== 'undefined' && window.localStorage) {
+  //     this.storedUser = localStorage.getItem('user');
   
+  //     try {
+  //       this.loggedInUser = this.storedUser ? JSON.parse(this.storedUser) : null;
+  //       this. loggedInEmail= this.storedUser ? JSON.parse(this.storedUser) : null;
+        
+  //       if (this.loggedInUser && this.loggedInUser.username ) {
+  //         this.userdata = this.loggedInUser.username;
+  //         this.userEmail = this.loggedInEmail.email
+  //         console.log(this.userdata);
+  //       } else {
+  //         console.log("No user found in localStorage.");
+  //       }
+  //     } catch (error) {
+  //       console.error("Error parsing user data from localStorage:", error);
+  //     }
+  //   } else {
+  //     console.log("localStorage is not available.");
+  //   }
+  // }
+
+  ngOnInit(): void {
+    if (typeof window !== 'undefined' && window.localStorage) {
+      this.fetchProfileImage();
+      this.storedUser = localStorage.getItem('user');
+    
       try {
         this.loggedInUser = this.storedUser ? JSON.parse(this.storedUser) : null;
-        this. loggedInEmail= this.storedUser ? JSON.parse(this.storedUser) : null;
+        this.loggedInEmail = this.storedUser ? JSON.parse(this.storedUser) : null;
         
-        if (this.loggedInUser && this.loggedInUser.username ) {
+        if (this.loggedInUser && this.loggedInUser.username) {
           this.userdata = this.loggedInUser.username;
-          this.userEmail = this.loggedInEmail.email
+          this.userEmail = this.loggedInEmail.email;
           console.log(this.userdata);
         } else {
           console.log("No user found in localStorage.");
@@ -44,6 +68,31 @@ export class HeaderComponent {
       console.log("localStorage is not available.");
     }
   }
+  
+  fetchProfileImage() {
+    if (typeof window === 'undefined' || !window.localStorage) {
+      console.error('localStorage is not available in this environment');
+      return;
+    }
+  
+    const storedUser = localStorage.getItem('user');
+    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+  
+    if (loggedInUser && loggedInUser.email) {
+      this.authService.getProfileImage(loggedInUser.email).subscribe({
+        next: (response) => {
+          const imageUrl = URL.createObjectURL(response);
+          this.profileImage = imageUrl;
+        },
+        error: (error) => {
+          console.error('Failed to fetch profile image', error);
+        }
+      });
+    } else {
+      console.error('No logged-in user email found');
+    }
+  }
+  
   
   showProfileCard = false; // Toggle for showing/hiding profile card
   userdata1= 'Sudheer Kumar Reddy Koduru'; // Example user data
@@ -85,25 +134,25 @@ export class HeaderComponent {
     }
   }
   
-  fetchProfileImage() {
-    const storedUser = localStorage.getItem('user');
-    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+  // fetchProfileImage() {
+  //   const storedUser = localStorage.getItem('user');
+  //   const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
   
-    if (loggedInUser && loggedInUser.email) {
-      this.authService.getProfileImage(loggedInUser.email).subscribe({
-        next: (response) => {
-          // Create a URL for the image Blob
-          const imageUrl = URL.createObjectURL(response);
-          this.profileImage = imageUrl; // Set the image URL to display
-        },
-        error: (error) => {
-          console.error('Failed to fetch profile image', error);
-        }
-      });
-    } else {
-      console.error('No logged-in user email found');
-    }
-  }
+  //   if (loggedInUser && loggedInUser.email) {
+  //     this.authService.getProfileImage(loggedInUser.email).subscribe({
+  //       next: (response) => {
+  //         // Create a URL for the image Blob
+  //         const imageUrl = URL.createObjectURL(response);
+  //         this.profileImage = imageUrl; // Set the image URL to display
+  //       },
+  //       error: (error) => {
+  //         console.error('Failed to fetch profile image', error);
+  //       }
+  //     });
+  //   } else {
+  //     console.error('No logged-in user email found');
+  //   }
+  // }
   
   
 

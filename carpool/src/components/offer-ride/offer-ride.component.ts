@@ -1,3 +1,4 @@
+import { filter } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -107,6 +108,8 @@ export class OfferRideComponent implements OnInit {
   rideDetails: any = null; // Store ride details for displaying after submission
   storedUser:any
   userdata:any
+  myRideDetails:any
+  myRideStatus:any
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.offerRideForm = this.fb.group({
@@ -118,6 +121,7 @@ export class OfferRideComponent implements OnInit {
   }
 
   ngOnInit(): void {
+      
     // this.loadRideDetails();
     if (typeof window !== 'undefined' && window.localStorage) {
       this.storedUser = localStorage.getItem('user');
@@ -137,6 +141,15 @@ export class OfferRideComponent implements OnInit {
     } else {
       console.log("localStorage is not available.");
     }
+
+    this.authService.getRideDetails().subscribe (res =>{
+      console.log(res);
+      this.myRideStatus=res
+      this. myRideDetails = res.filter((ride:any) => ride.owner ===  this.userdata)
+      console.log(this.myRideDetails);
+      
+            
+    })  
   }
 
   // loadRideDetails() {
