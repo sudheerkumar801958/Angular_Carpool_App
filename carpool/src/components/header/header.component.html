@@ -15,11 +15,11 @@
       </div>
     </div>
   </nav> -->
-  <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+  <nav class="navbar navbar-light" style="background-color: #f9e0fd;">
     <div class="container-fluid">
-      <a class="navbar-brand">Carpool</a>
+      <a class="navbar-brand logo"><img src="car.ico" />Carpool</a>
       <form class="d-flex">
-        <h5>{{ userdata }}</h5>
+        <div class="prf-name">{{ userdata }}</div>
         <!-- Profile Button -->
         <button class="btn grab-prf" type="button" (click)="toggleProfileCard()">
           <i class="fa fa-user-circle-o" aria-hidden="true"></i>

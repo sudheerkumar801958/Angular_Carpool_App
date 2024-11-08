@@ -32,19 +32,19 @@
     <div *ngFor="let ride of availableRides" class="col-md-4 d-flex align-items-stretch" style="margin-bottom: 20px;">
       <div class="card" style="width: 100%;">
         <div class="card-body">
-          <h5 class="card-title">Owner: {{ ride.owner }}</h5>
-          <h6 class="card-subtitle mb-2 text-muted">From: {{ ride.origin }} - To: {{ ride.destination }}</h6>
-          <p class="card-text">
-            <strong>Seats Available:</strong> {{ ride.availableSeats }}
-          </p>
+          <div class="title">Owner: <span class="span_t">{{ ride.owner }}</span></div>
+          <div class="title">From: <span class="span_t">{{ ride.origin }}</span> To: <span class="span_t">{{ ride.destination }}</span></div>
+          <div class="title"> Seats Available: <span class="span_t">{{ ride.availableSeats }}</span></div>
 
           <!-- Seat selection input -->
           <div class="form-group">
-            <label for="seatsToBook">Seats to Book:</label>
-            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" placeholder="no of seats"/>
+            <label for="seatsToBook"class="title">Seats To Book:</label>
+            <input type="number" min="1" [max]="ride.seatsAvailable" [(ngModel)]="ride.selectedSeats" class="form-control" placeholder="No of Seats"/>
           </div>
-
-          <button class="btn btn-primary mt-2" (click)="bookSeats(ride)">Book Now</button>
+          <div class="btn-body">
+            <button class="btn btn-primary reg-button" (click)="bookSeats(ride)">Book Now</button>
+          </div>
+         
         </div>
       </div>
     </div>

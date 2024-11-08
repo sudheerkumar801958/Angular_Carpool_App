@@ -8,26 +8,38 @@
         text-align: center;
         font-size: 20px;
         padding-top: 23px;
+        color: #ab414bdb;
     }
     .grab-prf{
         height: 20px;
     width: 20px;
     margin-top: 10px;
 }
-    
-    // .grab-label{
-    //     font-size: 14px;
-    //     font-weight: 500;
-    // }
-    // .grab-button{
-    //     text-align: center;
-       
-    //     margin: 20px 88px;
-    
-    //     background-color: #ea868fdb;
-    //     color: #000;
-    //     font-weight: 500;
-    //     border: transparent;
-    //     width: 60%;
-    // }
+ 
+ 
+}
+
+.title{
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: #000 !important;
+.span_t{
+    font-size: 14px !important;
+    font-weight: 400 !important;
+    color: #000 !important;
+}
+}
+.reg-button{
+    text-align: center;
+    background-color: #ea868fdb;
+    color: #000;
+    font-weight: 500;
+    border: transparent;
+    width: 45%; 
+}
+.btn-body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5px;
 }
