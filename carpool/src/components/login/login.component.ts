@@ -38,6 +38,11 @@ export class LoginComponent {
       this.loginForm.reset();
     }
   }
+  showPassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 }
 
 
