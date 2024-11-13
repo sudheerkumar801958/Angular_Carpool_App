@@ -55,6 +55,8 @@ export class UserAuthService {
     localStorage.removeItem('key');
     localStorage.removeItem('role');
     localStorage.removeItem('isAuthenticated');
+    localStorage.removeItem('user');
+    this.userSubject.next(null);
     this.router.navigate(['']);
     // this._authenticated = false;
     return of(true);

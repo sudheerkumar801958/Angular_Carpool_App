@@ -6,10 +6,10 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://83c9-45-112-28-194.ngrok-free.app/api/auth/';
-  private rideUrl='https://83c9-45-112-28-194.ngrok-free.app/api/rides/';
-  private profileUrl='https://83c9-45-112-28-194.ngrok-free.app/api/profile/';
-  
+  private apiUrl = 'https://678f-45-112-28-194.ngrok-free.app/api/auth/';
+  private rideUrl='https://678f-45-112-28-194.ngrok-free.app/api/rides/';
+  private profileUrl='https://678f-45-112-28-194.ngrok-free.app/api/profile/';
+  private grabUrl='https://678f-45-112-28-194.ngrok-free.app/api/grab/';
   constructor(private http: HttpClient) { }
 
   register(userData: any): Observable<any> {
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   getRideDetails(): Observable<any> {
-    return this.http.get<any>(`${this.rideUrl}getrides`);
+    return this.http.get<any>(`${this.rideUrl}getavailablerides`);
   }
 
   uploadProfileImage(formData: FormData): Observable<any> {
@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   notifyDriver(formData: any): Observable<any> {
-    return this.http.post<any>(this.rideUrl + 'notifyDriver', formData);
+    return this.http.post<any>(this.grabUrl + 'bookride', formData);
   }
   
   

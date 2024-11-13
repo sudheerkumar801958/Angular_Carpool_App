@@ -110,7 +110,7 @@ export class OfferRideComponent implements OnInit {
   userdata:any
   myRideDetails:any
   myRideStatus:any
-
+  showAlternateForm = false;
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.offerRideForm = this.fb.group({
       origin: ['', Validators.required],
@@ -145,10 +145,19 @@ export class OfferRideComponent implements OnInit {
     this.authService.getRideDetails().subscribe (res =>{
       console.log(res);
       this.myRideStatus=res
-      this. myRideDetails = res.filter((ride:any) => ride.owner ===  this.userdata)
+      if (res && res.message === 'No available rides found') {
+        this.showAlternateForm = true;
+      } else {
+        // Filter rides where the owner matches and set showAlternateForm if any ride has 0 available seats
+        this.myRideDetails = res.filter((ride: any) => ride.owner === this.userdata);
+        this.showAlternateForm = this.myRideDetails.some((ride: any) => ride.availableSeats === 0);
+      }
       console.log(this.myRideDetails);
-      
-            
+      console.log(this.showAlternateForm);
+      // this.myRideDetails = res.filter((ride:any) => ride.owner ===  this.userdata)
+      // console.log(this.myRideDetails);
+      // this.showAlternateForm = this.myRideDetails.some((ride: any) => ride.availableSeats === 0);
+      // console.log(this.showAlternateForm );
     })  
   }
 

@@ -12,9 +12,10 @@ export class RoleGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const expectedRole = route.data['role'];
+    const token = localStorage.getItem('key'); 
     const userRole = this.authService.getUser();
-
-    if (userRole === expectedRole) {
+   
+    if (token && userRole === expectedRole) {
       return true;
     } else {
       // Redirect to an unauthorized page or login page
@@ -22,4 +23,17 @@ export class RoleGuard implements CanActivate {
       return false;
     }
   }
+
+
+  // canActivate(): boolean {
+  //   // Check if the user is logged in by verifying the token
+  //   const token = localStorage.getItem('key');  // Adjust this key as needed
+  //   if (token) {
+  //     return true;  // Allow access if token is present
+  //   } else {
+  //     // Redirect to login if not authenticated
+  //     this.router.navigate(['/login']);
+  //     return false;
+  //   }
+  // }
 }

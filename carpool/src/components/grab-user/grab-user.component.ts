@@ -55,16 +55,16 @@ export class GrabUserComponent {
     const storedUser = localStorage.getItem('user');
     const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
     console.log(this.availableRides);
-    
-    
-    if(this.availableRides.availableSeats > this.availableRides.selectedSeats){
+    console.log(ride)
+    console.log(this.availableRides.selectedSeats)
+    if(ride.availableSeats < ride.selectedSeats){
       alert(" Not enough seats available ")
     }
     if (loggedInUser && ride.selectedSeats) {
       const payload = {
-        email: loggedInUser.email,
-        seatsToBook: ride.selectedSeats,
-        rideOwner: ride.owner,  // Additional ride details if needed
+        passanger: loggedInUser.email,
+        bookedSeats: ride.selectedSeats,
+        email: ride.owner,  // Additional ride details if needed
       };
 
       this.authService.notifyDriver(payload).subscribe(

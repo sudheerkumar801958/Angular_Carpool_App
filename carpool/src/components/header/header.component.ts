@@ -20,31 +20,6 @@ export class HeaderComponent {
   constructor(private eRef: ElementRef, private authService:AuthService, private userauthservice:UserAuthService) {
 
   }
-
-  // ngOnInit(): void {
-  //   this.fetchProfileImage()
-  //   if (typeof window !== 'undefined' && window.localStorage) {
-  //     this.storedUser = localStorage.getItem('user');
-  
-  //     try {
-  //       this.loggedInUser = this.storedUser ? JSON.parse(this.storedUser) : null;
-  //       this. loggedInEmail= this.storedUser ? JSON.parse(this.storedUser) : null;
-        
-  //       if (this.loggedInUser && this.loggedInUser.username ) {
-  //         this.userdata = this.loggedInUser.username;
-  //         this.userEmail = this.loggedInEmail.email
-  //         console.log(this.userdata);
-  //       } else {
-  //         console.log("No user found in localStorage.");
-  //       }
-  //     } catch (error) {
-  //       console.error("Error parsing user data from localStorage:", error);
-  //     }
-  //   } else {
-  //     console.log("localStorage is not available.");
-  //   }
-  // }
-
   ngOnInit(): void {
     if (typeof window !== 'undefined' && window.localStorage) {
       this.fetchProfileImage();

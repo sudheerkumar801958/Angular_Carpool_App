@@ -80,7 +80,7 @@
       </button>
     </form>
   </div> -->
-  <div class="container col-4 justify-content-center offer-main" *ngIf="myRideDetails?.length == 0">
+  <div class="container col-4 justify-content-center offer-main" *ngIf="showAlternateForm">
     <!-- Form Header -->
     <h2 class="mt-4 offer-head" *ngIf="!isSubmitted">Offer a Ride</h2>
   
@@ -158,7 +158,7 @@
     <!-- Ride Details Card After Submission -->
     
   </div>
- <div *ngIf="myRideDetails?.length > 0">
+ <div *ngIf="!showAlternateForm">
   <div  class="container card mt-4 col-4 justify-content-center" >
     <div class="card-header">
       Ride Details
