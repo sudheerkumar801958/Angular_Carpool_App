@@ -6,10 +6,10 @@ import { Observable, map } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://087f-45-112-28-194.ngrok-free.app/api/auth/';
-  private rideUrl='https://087f-45-112-28-194.ngrok-free.app/api/rides/';
-  private profileUrl='https://087f-45-112-28-194.ngrok-free.app/api/profile/';
-  private grabUrl='https://087f-45-112-28-194.ngrok-free.app/api/grab/';
+  private apiUrl = 'https://843f-45-112-28-194.ngrok-free.app/api/auth/';
+  private rideUrl='https://843f-45-112-28-194.ngrok-free.app/api/rides/';
+  private profileUrl='https://843f-45-112-28-194.ngrok-free.app/api/profile/';
+  private grabUrl='https://843f-45-112-28-194.ngrok-free.app/api/grab/';
   constructor(private http: HttpClient) { }
 
   register(userData: any): Observable<any> {

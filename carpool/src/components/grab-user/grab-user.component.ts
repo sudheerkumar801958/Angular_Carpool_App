@@ -40,47 +40,53 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 
 export class GrabUserComponent {
   showRides = true;
- availableRides:any;
-  constructor(private authService:AuthService) {}
+  availableRides: any;
 
-  ngOnInit(){
-    this.authService.getRideDetails().subscribe (res =>{
-      // console.log(res);
-      this.availableRides=res
-      
-    })
+  constructor(private authService: AuthService) {}
+
+  ngOnInit() {
+    this.authService.getRideDetails().subscribe(res => {
+      this.availableRides = res;
+    });
   }
 
   bookSeats(ride: any) {
     const storedUser = localStorage.getItem('user');
     const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
-    console.log(this.availableRides);
-    console.log(ride)
-    console.log(this.availableRides.selectedSeats)
-    if(ride.availableSeats < ride.selectedSeats){
-      alert(" Not enough seats available ")
-    }
-    if (loggedInUser && ride.selectedSeats) {
-      const payload = {
-        passanger: loggedInUser.email,
-        bookedSeats: ride.selectedSeats,
-        email: ride.owner,  // Additional ride details if needed
-      };
 
-      this.authService.notifyDriver(payload).subscribe(
-        response => {
-          console.log('Booking successful', response);
-          // Additional logic after booking, e.g., confirmation message
-        },
-        error => {
-          console.error('Error booking seats', error);
-        }
-      );
+    if (ride.availableSeats < ride.selectedSeats) {
+      alert("Not enough seats available");
+      return;
+    }
+
+    if (loggedInUser && ride.selectedSeats) {
+      // Find the selected ride in availableRides based on _id
+      const selectedRide = this.availableRides.find((rideItem: any) => rideItem._id === ride._id);
+
+      if (selectedRide) {
+        const payload = {
+          passanger: loggedInUser.email,
+          contactNumber: loggedInUser.contact,
+          bookedSeats: ride.selectedSeats,
+          UserName: loggedInUser.username,
+          email: selectedRide.owner,      // Owner's email
+          ownerNumber: selectedRide.contact  // Owner's contact number
+        };
+
+        this.authService.notifyDriver(payload).subscribe(
+          response => {
+            console.log('Booking successful', response);
+            // Additional logic after booking, e.g., confirmation message
+          },
+          error => {
+            console.error('Error booking seats', error);
+          }
+        );
+      } else {
+        console.error('Selected ride not found in available rides');
+      }
     } else {
       console.error('User not logged in or no seats selected');
     }
   }
-  
-
-  
 }

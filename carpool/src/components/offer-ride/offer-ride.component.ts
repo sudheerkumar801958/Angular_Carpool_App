@@ -108,6 +108,7 @@ export class OfferRideComponent implements OnInit {
   rideDetails: any = null; // Store ride details for displaying after submission
   storedUser:any
   userdata:any
+  userNumber:any;
   myRideDetails:any
   myRideStatus:any
   showAlternateForm = false;
@@ -131,6 +132,7 @@ export class OfferRideComponent implements OnInit {
         
         if (userEmail && userEmail.email) {
           this.userdata = userEmail.email;
+          this.userNumber = userEmail.contact
           console.log(this.userdata);
         } else {
           console.log("No user found in localStorage.");
@@ -175,7 +177,8 @@ export class OfferRideComponent implements OnInit {
     if (this.offerRideForm.valid) {
       const rideData = {
         ...this.offerRideForm.value,  // Spread the form values
-        email: this.userdata           // Add userdata (email) to the payload
+        email: this.userdata  ,
+        contact:this.userNumber         // Add userdata (email) to the payload
       };
      
         this.authService.offerRide(rideData).subscribe(

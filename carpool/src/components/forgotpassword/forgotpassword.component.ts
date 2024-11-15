@@ -30,16 +30,16 @@ export class ForgotpasswordComponent {
   }
 
   onSubmit() {
-    const storedUser = localStorage.getItem('user');
-    const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
+    // const storedUser = localStorage.getItem('user');
+    // const loggedInUser = storedUser ? JSON.parse(storedUser) : null;
   
    
       if (this.loginForm.valid) {
         // Create a copy of the form values excluding confirmPassword
         const formData = { ...this.loginForm.value };
         delete formData.confirmPassword;
-        formData['email'] = loggedInUser.email;
-        console.log(formData);
+        // formData['email'] = loggedInUser.email;
+        // console.log(formData);
     
         this.authService.forgotPassword(formData)
           .subscribe(
